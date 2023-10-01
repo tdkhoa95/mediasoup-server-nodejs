@@ -247,18 +247,18 @@ gulp.task('live', gulp.series(
 	'browser:base',
 	(done) =>
 	{
-		const config = require('../server/config');
+		const config = require('../server/dist/lib/config/config');
 
 		browserSync(
 			{
 				open      : 'external',
-				host      : config.domain,
+				host      : config.default.domain,
 				startPath : '/?info=true',
 				server    :
 				{
 					baseDir : OUTPUT_DIR
 				},
-				https     : config.https.tls,
+				https     : config.default.https.tls,
 				ghostMode : false,
 				files     : path.join(OUTPUT_DIR, '**', '*')
 			});
@@ -271,20 +271,20 @@ gulp.task('devel', gulp.series(
 	'browser:base',
 	async (done) =>
 	{
-		const config = require('../server/config');
+		const config = require('../server/dist/lib/config/config');
 
 		await new Promise((resolve) =>
 		{
 			browserSync.create('producer1').init(
 				{
 					open      : 'external',
-					host      : config.domain,
+					host      : config.default.domain,
 					startPath : '/?roomId=devel&info=true&_throttleSecret=foo&consume=false',
 					server    :
 					{
 						baseDir : OUTPUT_DIR
 					},
-					https     : config.https.tls,
+					https     : config.default.https.tls,
 					ghostMode : false,
 					files     : path.join(OUTPUT_DIR, '**', '*')
 				},
@@ -296,13 +296,13 @@ gulp.task('devel', gulp.series(
 			browserSync.create('consumer1').init(
 				{
 					open      : 'external',
-					host      : config.domain,
+					host      : config.default.domain,
 					startPath : '/?roomId=devel&info=true&_throttleSecret=foo&produce=false',
 					server    :
 					{
 						baseDir : OUTPUT_DIR
 					},
-					https     : config.https.tls,
+					https     : config.default.https.tls,
 					ghostMode : false,
 					files     : path.join(OUTPUT_DIR, '**', '*')
 				},
@@ -317,20 +317,20 @@ gulp.task('devel:tcp', gulp.series(
 	'browser:base',
 	async (done) =>
 	{
-		const config = require('../server/config');
+		const config = require('../server/dist/lib/config/config');
 
 		await new Promise((resolve) =>
 		{
 			browserSync.create('producer1').init(
 				{
 					open      : 'external',
-					host      : config.domain,
+					host      : config.default.domain,
 					startPath : '/?roomId=devel:tcp&info=true&_throttleSecret=foo&forceTcp=true&consume=false',
 					server    :
 					{
 						baseDir : OUTPUT_DIR
 					},
-					https     : config.https.tls,
+					https     : config.default.https.tls,
 					ghostMode : false,
 					files     : path.join(OUTPUT_DIR, '**', '*')
 				},
@@ -342,13 +342,13 @@ gulp.task('devel:tcp', gulp.series(
 			browserSync.create('consumer1').init(
 				{
 					open      : 'external',
-					host      : config.domain,
+					host      : config.default.domain,
 					startPath : '/?roomId=devel:tcp&info=true&_throttleSecret=foo&forceTcp=true&produce=false',
 					server    :
 					{
 						baseDir : OUTPUT_DIR
 					},
-					https     : config.https.tls,
+					https     : config.default.https.tls,
 					ghostMode : false,
 					files     : path.join(OUTPUT_DIR, '**', '*')
 				},
@@ -363,20 +363,20 @@ gulp.task('devel:vp9', gulp.series(
 	'browser:base',
 	async (done) =>
 	{
-		const config = require('../server/config');
+		const config = require('../server/dist/lib/config/config');
 
 		await new Promise((resolve) =>
 		{
 			browserSync.create('producer1').init(
 				{
 					open      : 'external',
-					host      : config.domain,
+					host      : config.default.domain,
 					startPath : '/?roomId=devel:vp9&info=true&_throttleSecret=foo&forceVP9=true&numSimulcastStreams=3&webcamScalabilityMode=L1T3&consume=false',
 					server    :
 					{
 						baseDir : OUTPUT_DIR
 					},
-					https     : config.https.tls,
+					https     : config.default.https.tls,
 					ghostMode : false,
 					files     : path.join(OUTPUT_DIR, '**', '*')
 				},
@@ -388,13 +388,13 @@ gulp.task('devel:vp9', gulp.series(
 			browserSync.create('consumer1').init(
 				{
 					open      : 'external',
-					host      : config.domain,
+					host      : config.default.domain,
 					startPath : '/?roomId=devel:vp9&info=true&_throttleSecret=foo&forceVP9=true&produce=false',
 					server    :
 					{
 						baseDir : OUTPUT_DIR
 					},
-					https     : config.https.tls,
+					https     : config.default.https.tls,
 					ghostMode : false,
 					files     : path.join(OUTPUT_DIR, '**', '*')
 				},
@@ -409,20 +409,20 @@ gulp.task('devel:h264', gulp.series(
 	'browser:base',
 	async (done) =>
 	{
-		const config = require('../server/config');
+		const config = require('../server/dist/lib/config/config');
 
 		await new Promise((resolve) =>
 		{
 			browserSync.create('producer1').init(
 				{
 					open      : 'external',
-					host      : config.domain,
+					host      : config.default.domain,
 					startPath : '/?roomId=devel:h264&info=true&_throttleSecret=foo&forceH264=true&consume=false',
 					server    :
 					{
 						baseDir : OUTPUT_DIR
 					},
-					https     : config.https.tls,
+					https     : config.default.https.tls,
 					ghostMode : false,
 					files     : path.join(OUTPUT_DIR, '**', '*')
 				},
@@ -434,13 +434,13 @@ gulp.task('devel:h264', gulp.series(
 			browserSync.create('consumer1').init(
 				{
 					open      : 'external',
-					host      : config.domain,
+					host      : config.default.domain,
 					startPath : '/?roomId=devel:h264&info=true&_throttleSecret=foo&forceH264=true&produce=false',
 					server    :
 					{
 						baseDir : OUTPUT_DIR
 					},
-					https     : config.https.tls,
+					https     : config.default.https.tls,
 					ghostMode : false,
 					files     : path.join(OUTPUT_DIR, '**', '*')
 				},

@@ -1,15 +1,15 @@
-const Logger = require('./Logger');
-
+// const Logger = require('./Logger');
+import Logger from "./logger/logger";
 const logger = new Logger('Bot');
 
-class Bot
-{
-	static async create({ mediasoupRouter })
-	{
+export class Bot {
+	private _transport: any;
+	private _dataProducer: any;
+	static async create({ mediasoupRouter }) {
 		// Create a DirectTransport for connecting the bot.
 		const transport = await mediasoupRouter.createDirectTransport(
 			{
-				maxMessageSize : 512
+				maxMessageSize: 512
 			});
 
 		// Create DataProducer to send messages to peers.
@@ -21,8 +21,7 @@ class Bot
 		return bot;
 	}
 
-	constructor({ transport, dataProducer })
-	{
+	constructor({ transport, dataProducer }) {
 		// mediasoup DirectTransport.
 		this._transport = transport;
 
@@ -30,29 +29,24 @@ class Bot
 		this._dataProducer = dataProducer;
 	}
 
-	get dataProducer()
-	{
+	get dataProducer() {
 		return this._dataProducer;
 	}
 
-	close()
-	{
+	close() {
 		// No need to do anyting.
 	}
 
-	async handlePeerDataProducer({ dataProducerId, peer })
-	{
+	async handlePeerDataProducer({ dataProducerId, peer }) {
 		// Create a DataConsumer on the DirectTransport for each Peer.
 		const dataConsumer = await this._transport.consumeData(
 			{
 				dataProducerId
 			});
 
-		dataConsumer.on('message', (message, ppid) =>
-		{
+		dataConsumer.on('message', (message, ppid) => {
 			// Ensure it's a WebRTC DataChannel string.
-			if (ppid !== 51)
-			{
+			if (ppid !== 51) {
 				logger.warn('ignoring non string messagee from a Peer');
 
 				return;
@@ -71,5 +65,3 @@ class Bot
 		});
 	}
 }
-
-module.exports = Bot;
