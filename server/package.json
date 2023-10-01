@@ -8,7 +8,8 @@
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint -c .eslintrc.js server.js lib connect.js",
-    "start": "DEBUG=${DEBUG:='*mediasoup* *INFO* *WARN* *ERROR*'} INTERACTIVE=${INTERACTIVE:='true'} node server.js",
+    "start": "npm run build && DEBUG=${DEBUG:='*mediasoup* *INFO* *WARN* *ERROR*'} INTERACTIVE=${INTERACTIVE:='true'} node dist/server.js",
+    "build": "mkdir -p dist && touch dist/tmp && find dist/* -maxdepth 0 ! -name public -exec rm -rf {} \\; && tsc && ln -s ../certs dist/certs && chmod 755 dist/server.js && ( for fileExt in yaml json toml ; do [ -f config/config.$fileExt ] && cp config/config.$fileExt dist/config/; done ) | true && touch 'dist/ __AUTO_GENERATED_CONTENT_REFRESHED_AFTER_REBUILDING!__ '",
     "connect": "node connect.js"
   },
   "dependencies": {
@@ -24,9 +25,14 @@
     "protoo-server": "^4.0.5"
   },
   "devDependencies": {
+    "@types/debug": "^4.1.9",
+    "@types/node": "^20.8.0",
+    "@types/protoo-server": "^4.0.4",
     "eslint": "^6.8.0",
     "gulp": "^4.0.2",
     "gulp-eslint": "^6.0.0",
-    "gulp-plumber": "^1.2.1"
+    "gulp-plumber": "^1.2.1",
+    "nodemon": "^3.0.1",
+    "typescript": "^5.2.2"
   }
 }
