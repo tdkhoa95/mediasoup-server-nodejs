@@ -1,0 +1,12 @@
+node_modules/
+
+/server/config.*
+!/server/config.example.js
+/server/public/
+/server/certs/
+/server/dist/
+/server/mediasoup_valgrind_*
+
+/.vscode/
+
+.gitattributes
